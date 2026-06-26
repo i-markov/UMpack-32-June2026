@@ -9,7 +9,7 @@ Contact email: `igor.markov1@gmail.com`
 
 UMpack is a collection of layout and utility packages used by tools
 for hypergraph partitioning, placement and floorplanning.  This checkout
-contains 30 top-level package directories with buildable libraries and
+contains 32 top-level package directories with buildable libraries and
 tools; the top-level Perl configuration script is the intended way to
 configure and build the full set.
 
@@ -173,7 +173,6 @@ Significant updates in 2026 funded by IonQ, Inc:
 3. Migration to standard C++ containers and algorithms
 4. Comprehensive test infrastructure improvements
 5. Enhanced documentation (CLAUDE.md, FIXES_AND_LESSONS.md)
-6. Experimental benchmarking framework (experiments/)
 
 This work was performed by Igor L. Markov (IonQ contractor) and
 Daiwei Chen (IonQ employee).
