@@ -19,10 +19,10 @@ Top-level package directories:
 
 `ABKCommon`, `AnalytPl`, `Capo`, `ClusteredHGraph`, `Combi`,
 `CongestionMaps`, `Constraints`, `Ctainers`, `FMPart`, `FilledHier`,
-`GenHier`, `GeomTrees`, `Geoms`, `HGraph`, `HGraphWDims`, `MLPart`,
+`FixOr`, `GenHier`, `GeomTrees`, `Geoms`, `HGraph`, `HGraphWDims`, `MLPart`,
 `ParquetDBFromRBP`, `ParquetFP`, `PartEvals`, `PartLegality`,
 `Partitioners`, `Partitioning`, `PlaceEvals`, `Placement`, `RBPlace`,
-`ShellPart`, `SmallPart`, `SmallPlacement`, `SmallPlacers`, `Stats`.
+`RowIroning`, `ShellPart`, `SmallPart`, `SmallPlacement`, `SmallPlacers`, `Stats`.
 
 ## Requirements
 
