@@ -1,5 +1,6 @@
 /**************************************************************************
 ***    
+*** Copyright (c) 2026 IonQ, Inc.
 *** Copyright (c) 1995-2000 Regents of the University of California,
 ***               Andrew E. Caldwell, Andrew B. Kahng and Igor L. Markov
 *** Copyright (c) 2000-2012 Regents of the University of Michigan,

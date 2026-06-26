@@ -164,6 +164,23 @@ gnuplot visualization with any existing `-plot*` option.  In this mode,
 `-saveOrder` is the option that selects the synthetic one-row layout; no
 separate mode flag is needed.
 
+## 2026 Modernization
+
+Significant updates in 2026 funded by IonQ, Inc:
+
+1. Build system modernization for GCC 13+ compatibility
+2. Removal of deprecated SGI STL extensions and custom allocators
+3. Migration to standard C++ containers and algorithms
+4. Comprehensive test infrastructure improvements
+5. Enhanced documentation (CLAUDE.md, FIXES_AND_LESSONS.md)
+6. Experimental benchmarking framework (experiments/)
+
+This work was performed by Igor L. Markov (IonQ contractor) and
+Daiwei Chen (IonQ employee).
+
+For detailed engineering notes on the modernization effort,
+see [FIXES_AND_LESSONS.md](./FIXES_AND_LESSONS.md).
+
 ## Notes
 
 - It is recommended that you let the installation program build all the

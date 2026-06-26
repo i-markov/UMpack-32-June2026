@@ -1,4 +1,10 @@
 
+  Significant modernization and maintenance work in 2026 was funded by
+  IonQ, Inc. This includes build system improvements, compiler compatibility
+  updates, test infrastructure enhancements, and comprehensive documentation
+  by Igor L. Markov (IonQ contractor) and Daiwei Chen (IonQ employee).
+
+
   This software was developed at the Computer Science Department of UCLA
   and the Department of EECS at the University of Michigan. It was funded
   by gift from Cadence Design Systems, Inc and Synplicity, Inc, as well as
