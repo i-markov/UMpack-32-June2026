@@ -2,6 +2,7 @@
 ![GCC](https://img.shields.io/badge/GCC-13%2B-orange)
 ![Build](https://img.shields.io/badge/build-passing-brightgreen)
 ![Status](https://img.shields.io/badge/status-stable-brightgreen)
+![License](https://img.shields.io/badge/license-MIT-yellow)
 
 # UMpack
 
