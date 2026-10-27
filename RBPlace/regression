@@ -67,16 +67,16 @@ echo "------------  Running test 4a..." >>new.out
 printf "%s" "Running test 4a..."
 cp TESTS/seeds.in .
 "$PROG"4.exe -f TESTS/saurabh1.aux -plotWNames out >>new.out 2>&1
-cat out.plt >>new.out
-rm out.plt seeds.in
+cat out.gpl >>new.out
+rm out.gpl seeds.in
 echo Ok
 
 echo "------------  Running test 4b..." >>new.out
 printf "%s" "Running test 4b..."
 cp TESTS/seeds.in .
 "$PROG"4.exe -f TESTS/primary1.nf.WS02.aux -plotWNames out -legal >>new.out 2>&1
-cat out.plt >>new.out
-rm out.plt seeds.in
+cat out.gpl >>new.out
+rm out.gpl seeds.in
 echo Ok
 
 /bin/rm *.plt *.def >/dev/null 2>&1

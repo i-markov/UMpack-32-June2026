@@ -19826,7 +19826,7 @@ Finished reading TESTS/saurabh1.aux and referenced files
  Reading TESTS/saurabh1.scl ... 
  Reading TESTS/saurabh1.pl ... 
 Finished reading TESTS/saurabh1.aux and referenced files
-Saving out.plt
+Saving out.gpl
 File seeds.in exists and will override all seeds, including hardcoded ones 
  Center-to-center HalfPerim WL: 21 (21 x , 0 y )
  Pin-to-pin HalfPerim WL      : 21 (21 x , 0 y )
@@ -19871,7 +19871,7 @@ set label "C19" at 1.25 , 4.33333
 set label "C20" at 0.25 , 4.33333
 
 
- plot[:][:] '-' w l 3, '-' w l 7, '-' w l 2, '-' w l 7, '-' w l 0
+ plot[:][:] '-' w l lt 3, '-' w l lt 7, '-' w l lt 2, '-' w l lt 7, '-' w l lt 0
 
 # minx: 0 maxx: 6 units per x pixel: 0.0046875
 # miny: 0 maxy: 5 units per y pixel: 0.00488281
@@ -20228,7 +20228,7 @@ Finished reading TESTS/primary1.nf.WS02.aux and referenced files
   Overlaps remaining: 0
   HPWL after overlap removal is 1.08855e+06
   % increase in HPWL is 0.016
-Saving out.plt
+Saving out.gpl
  Center-to-center HalfPerim WL: 1.08855e+06 (620856 x , 467695 y )
  Pin-to-pin HalfPerim WL      : 1.08855e+06 (620856 x , 467695 y )
 #Use this file as a script for gnuplot
@@ -21085,7 +21085,7 @@ set label "C794" at 4787.5 , 2825
 set label "C795" at 4782.5 , 3725
 
 
- plot[:][:] '-' w l 3, '-' w l 7, '-' w l 2, '-' w l 7, '-' w l 0
+ plot[:][:] '-' w l lt 3, '-' w l lt 7, '-' w l lt 2, '-' w l lt 7, '-' w l lt 0
 
 # minx: -1670 maxx: 7032 units per x pixel: 6.79844
 # miny: -734 maxy: 5934 units per y pixel: 6.51172
