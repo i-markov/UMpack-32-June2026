@@ -49,19 +49,19 @@ run_ok() {
 rm -f seeds.in seeds.out new.out diffs.notime
 run_ok semantic "$PROG"3.exe
 
-echo -n "Running test 0 ..."
+printf '%s' "Running test 0 ..."
 echo " ---- test 0 ----- " >>new.out
 printf '%s\n' 0 1667770400 >seeds.in
 "$PROG"0.exe >>new.out 2>&1
 rm -f seeds.in
 echo Ok
 
-echo -n "Running test 1 ..."
+printf '%s' "Running test 1 ..."
 echo " ---- test 1 ---- " >>new.out
 "$PROG"1.exe >>new.out 2>&1
 echo Ok
 
-echo -n "Running test 2 ..."
+printf '%s' "Running test 2 ..."
 echo " ---- test 2 ---- " >>new.out
 "$PROG"2.exe >>new.out 2>&1
 echo Ok

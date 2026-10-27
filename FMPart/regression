@@ -32,7 +32,7 @@ rm -f seeds.* new4.out new4out.notime expected4out.notime diffs4.notime \
 printf '%s\n' 0 1 >seeds.in
 
 echo "------------  Running test 0a..." >new.out
-echo -n Running test 0a...
+printf '%s' "Running test 0a..."
 "$PROG"0.exe -f TESTS/primary1+.aux -useClip -num 3 -verb 1_1_1 >>new.out 2>&1
 echo Ok
 
@@ -42,7 +42,7 @@ egrep -v "(#|seed|conversion|arning|Built|built|running|and libraries|compiler|C
 "$DIFF" newout.notime expectedout.notime >diffs.notime
 
 echo "------------  Running test 3..." >new3.out
-echo -n Running test 3...
+printf '%s' "Running test 3..."
 "$PROG"3.exe -f TESTS/primary1+.aux -num 3 -runs 1 -clip -verb 1_1_1 >>new3.out 2>&1
 echo Ok
 
@@ -52,7 +52,7 @@ egrep "^(-----   TestRun Number| Best of 3 Net Cut:| Best Costs:)" new3.out | \
 "$DIFF" new3out.notime expected3.out >diffs3.notime
 
 echo "------------  Running test 4a..." >new4.out
-echo -n Running test 4a...
+printf '%s' "Running test 4a..."
 "$PROG"4.exe -f TESTS/primary1+.aux -num 3 -runs 1 -useClip -verb 1_1_1 >>new4.out 2>&1
 echo Ok
 
@@ -62,7 +62,7 @@ egrep "^(-----   TestRun Number|Unweighted Net Cut:|Weighted   Net Cut:| Best Co
 "$DIFF" new4out.notime expected4out.notime >diffs4.notime
 
 echo "------------  Running test 8..." >new8.out
-echo -n Running test 8...
+printf '%s' "Running test 8..."
 "$PROG"8.exe -f TESTS/primary1+.aux -useClip -verb 1_1_1 >>new8.out 2>&1
 echo Ok
 
@@ -75,7 +75,7 @@ awk '/^Weighted edge refinement results/ || \
 "$DIFF" new8out.notime expected8.out >diffs8.notime
 
 echo "------------  Running test 0 refine..." >test.out
-echo -n Running test 0 refine...
+printf '%s' "Running test 0 refine..."
 "$PROG"0.exe -f TESTS/dwarf1.aux -refine -verb 1_1_1 >>test.out 2>&1
 echo Ok
 

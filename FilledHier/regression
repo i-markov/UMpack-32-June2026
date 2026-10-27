@@ -25,7 +25,7 @@ PROG=./FilledHierTest
 rm -f seeds.in seeds.out *.diff >/dev/null 2>&1
 
 echo "------------  Running test 1 ..." >new.out
-echo -n Running test 1 ...
+printf '%s' "Running test 1 ..."
 "$PROG"0.exe -f TESTS/size99.hcl -hgraphAux TESTS/size99.aux >>new.out
 echo Ok
 

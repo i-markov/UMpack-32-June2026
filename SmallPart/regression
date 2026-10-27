@@ -27,28 +27,28 @@ rm -f seeds.out *.diff >/dev/null 2>&1
 cp -f TESTS/seeds.in ./
 
 echo "------------  Running test 0a..." >new.out
-echo -n Running test 0a...
+printf '%s' "Running test 0a..."
 "$PROG"0.exe -f TESTS/test2cells.aux >>new.out 2>&1
 cat best.sol >>new.out
 rm -f best.sol
 echo Ok
 
 echo "------------  Running test 0b..." >>new.out
-echo -n Running test 0b...
+printf '%s' "Running test 0b..."
 "$PROG"0.exe -f TESTS/test12cells.aux >>new.out 2>&1
 cat best.sol >>new.out
 rm -f best.sol
 echo Ok
 
 echo "------------  Running test 0c..." >>new.out
-echo -n Running test 0c...
+printf '%s' "Running test 0c..."
 "$PROG"0.exe -f TESTS/spp-i872.aux >>new.out 2>&1
 cat best.sol >>new.out
 rm -f best.sol
 echo Ok
 
 echo "------------  Running test 2..." >>new.out
-echo -n Running test 2...
+printf '%s' "Running test 2..."
 rm -f err.log
 rm -f run.log
 

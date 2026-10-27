@@ -27,22 +27,22 @@ rm -rf seeds.* >/dev/null 2>&1
 cp TESTS/seeds.in seeds.in
 
 echo "------------  Running test 0a..." >new.out
-echo -n Running test 0a...
+printf '%s' "Running test 0a..."
 "$PROG"0.exe -f TESTS/primary1+.aux -verb 6_6_6 >>new.out 2>&1
 echo Ok
 
 echo "------------  Running test 0b-opt1..." >>new.out
-echo -n Running test 0b-opt1...
+printf '%s' "Running test 0b-opt1..."
 "$PROG"0.exe -f TESTS/ibm01+.aux -verb 6_6_6 -clSizeOfTop 75 >>new.out 2>&1
 echo Ok
 
 echo "------------  Running test 0b-opt2..." >>new.out
-echo -n Running test 0b-opt2...
+printf '%s' "Running test 0b-opt2..."
 "$PROG"0.exe -f TESTS/ibm01+.aux -verb 6_6_6 -clSizeOfTop 75 -clRemoveDup 2 >>new.out 2>&1
 echo Ok
 
 echo "------------  Running test 0b-opt3..." >>new.out
-echo -n Running test 0b-opt3...
+printf '%s' "Running test 0b-opt3..."
 "$PROG"0.exe -f TESTS/ibm01+.aux -verb 6_6_6 -clSizeOfTop 75 -clRemoveDup 3 >>new.out 2>&1
 echo Ok
 

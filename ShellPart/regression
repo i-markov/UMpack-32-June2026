@@ -26,7 +26,7 @@ rm -f new.out
 rm -f seeds.in seeds.out *.diff
 
 #echo "------------  Running test 1..." >> new.out
-#echo -n Running test 1...
+#printf '%s' "Running test 1..."
 rm -f err.log
 rm -f run.log
 

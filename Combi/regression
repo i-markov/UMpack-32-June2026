@@ -25,42 +25,42 @@ PROG=./CombiTest
 rm -f seeds.{in,out} *.diff >/dev/null 2>&1
 
 echo " ------------  Running test 0 ..." >new.out
-echo -n Running test 0 ...
+printf '%s' "Running test 0 ..."
 "$PROG"0.exe >>new.out
 echo Ok
 
 echo " ------------  Running test 1 ..." >>new.out
-echo -n Running test 1 ...
+printf '%s' "Running test 1 ..."
 "$PROG"1.exe >>new.out
 echo Ok
 
 echo " ------------  Running test 2 ..." >>new.out
-echo -n Running test 2 ...
+printf '%s' "Running test 2 ..."
 "$PROG"2.exe >>new.out
 echo Ok
 
 echo "------------  Running test 3 ..." >>new.out
-echo -n Running test 3 ...
+printf '%s' "Running test 3 ..."
 "$PROG"3.exe 5 >>new.out
 echo Ok
 
 echo "------------  Running test 4a..." >>new.out
-echo -n Running test 4a...
+printf '%s' "Running test 4a..."
 "$PROG"4.exe 4 >>new.out
 echo Ok
 
 echo "------------  Running test 4b..." >>new.out
-echo -n Running test 4b...
+printf '%s' "Running test 4b..."
 "$PROG"4.exe 9 >>new.out
 echo Ok
 
 echo "------------  Running test 5a..." >>new.out
-echo -n Running test 5a...
+printf '%s' "Running test 5a..."
 "$PROG"5.exe 4 >>new.out
 echo Ok
 
 echo "------------  Running test 5b..." >>new.out
-echo -n Running test 5b...
+printf '%s' "Running test 5b..."
 "$PROG"5.exe 3 3 >>new.out
 echo Ok
 
