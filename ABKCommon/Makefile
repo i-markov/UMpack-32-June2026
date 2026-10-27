@@ -128,7 +128,11 @@ TEST_EXES = ABKCommonTest0.exe ABKCommonTest1.exe ABKCommonTest2.exe \
 SANITIZER_FLAGS = -fsanitize=address,undefined -fno-omit-frame-pointer
 
 test : lib $(TEST_EXES)
-      
+
+# Tests link against libABKCommon; without this, "make -jN test" can link a
+# test while "lib" is deleting and recreating the library.
+$(TEST_EXES): lib
+
 
 testS: ABKCommonTest0.exeS ABKCommonTest1.exeS ABKCommonTest2.exeS \
        ABKCommonTest3.exeS ABKCommonTest4.exeS ABKCommonTest5.exeS \
