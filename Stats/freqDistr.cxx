@@ -176,7 +176,8 @@ void CumulativeFrequencyDistribution::printEqualSubranges(ostream& out) const {
     snprintf(buf1, sizeof(buf1), "[%.3g,%.3g%c:", curMinVal, curMaxVal,
              cloBrac);
     stringstream buf2;
-    buf2 << setw(20) << buf1 << " " << setw(5) << setiosflags(std::ios::left)
+    buf2 << setw(20) << buf1 << " " << setw(5)
+         << std::setiosflags(std::ios::left)
          << curMaxIter - curMinIter << spc;
     out << setw(26) << buf2.str() << setw(0);
     curMinVal = curMaxVal;
@@ -226,7 +227,8 @@ void CumulativeFrequencyDistribution::printEquipotentSubranges(
     snprintf(buf1, sizeof(buf1), "[%.3g,%.3g%c:", curMinVal, curMaxVal,
              cloBrac);
     stringstream buf2;
-    buf2 << setw(20) << buf1 << " " << setw(5) << setiosflags(std::ios::left)
+    buf2 << setw(20) << buf1 << " " << setw(5)
+         << std::setiosflags(std::ios::left)
          << curMaxNum - curMinNum << spc;
     out << setw(26) << buf2.str() << setw(0);
 

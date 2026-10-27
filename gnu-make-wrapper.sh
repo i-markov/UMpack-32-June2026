@@ -4,6 +4,19 @@ mode=$1
 pkgdir=$2
 shift 2
 
+helper_dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+host_system=${UMPACK_HOST_SYSTEM:-$(uname -s)}
+case "$host_system" in
+Darwin)
+	cxx="$helper_dir/cxx-wrapper.sh"
+	cc=clang
+	;;
+*)
+	cxx=g++
+	cc=gcc
+	;;
+esac
+
 case "$mode" in
 make-gnu)
 	makefile="./make-gnu"
@@ -26,20 +39,20 @@ make_pkg() {
 	with-c)
 		shift
 		exec make \
-			MAKE="$makefile" DEPENDOPT="-MM" CC4LIBS="g++" \
+			MAKE="$makefile" DEPENDOPT="-MM" CC4LIBS="$cxx" \
 			OPTFLAGS="$optflags" CCFLAGS="$ccflags" \
-			C='gcc $(OPTFLAGS) $(CCFLAGS)' \
-			CC='g++ $(OPTFLAGS) $(CCFLAGS)' \
-			LD="g++ -shared" LDFINAL="g++" SODIRKEY="-Wl,-rpath," \
+			C="$cc \$(OPTFLAGS) \$(CCFLAGS)" \
+			CC="$cxx \$(OPTFLAGS) \$(CCFLAGS)" \
+			LD="$cxx -shared" LDFINAL="$cxx" SODIRKEY="-Wl,-rpath," \
 			SOLABEL="" \
 			"$@"
 		;;
 	*)
 		exec make \
-			MAKE="$makefile" DEPENDOPT="-MM" CC4LIBS="g++" \
+			MAKE="$makefile" DEPENDOPT="-MM" CC4LIBS="$cxx" \
 			OPTFLAGS="$optflags" CCFLAGS="$ccflags" \
-			CC='g++ $(OPTFLAGS) $(CCFLAGS)' \
-			LD="g++ -shared" LDFINAL="g++" SODIRKEY="-Wl,-rpath," \
+			CC="$cxx \$(OPTFLAGS) \$(CCFLAGS)" \
+			LD="$cxx -shared" LDFINAL="$cxx" SODIRKEY="-Wl,-rpath," \
 			SOLABEL="" \
 			"$@"
 		;;

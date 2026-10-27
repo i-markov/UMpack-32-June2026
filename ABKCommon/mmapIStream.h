@@ -63,8 +63,8 @@ class MMapIStream : public std::basic_istream<char> {
 
  public:
   explicit MMapIStream(const char* __s,
-                       ios_base::openmode __mode = ios_base::in)
-      : __istream_type(NULL), _M_mmapbuf(__s) {
+                       std::ios_base::openmode __mode = std::ios_base::in)
+      : std::basic_istream<char>(NULL), _M_mmapbuf(__s) {
     this->init(&_M_mmapbuf);
   }
   /*

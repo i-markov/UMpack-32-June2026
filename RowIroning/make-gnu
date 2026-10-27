@@ -1,3 +1,8 @@
 #!/bin/sh
-make MAKE="./make-gnu" DEPENDOPT="-MM" CC4LIBS="g++" OPTFLAGS="-g -DABKDEBUG"  CCFLAGS="-fPIC -Wall -pedantic -pipe" C='gcc $(OPTFLAGS) $(CCFLAGS)' CC='g++ $(OPTFLAGS) $(CCFLAGS)' LD="g++ -shared" LDFINAL="g++" SOLABEL="" SODIRKEY="-Wl,-rpath,"  $1 $2 $3 $4 $5
-# SONAMEKEY="-Wl,-soname," 
+script_dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+helper_dir=$script_dir
+while [ ! -f "$helper_dir/gnu-make-wrapper.sh" ]; do
+	[ "$helper_dir" = "/" ] && break
+	helper_dir=$(dirname "$helper_dir")
+done
+exec "$helper_dir/gnu-make-wrapper.sh" make-gnu "$script_dir" "$@"

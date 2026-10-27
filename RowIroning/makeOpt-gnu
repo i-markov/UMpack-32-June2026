@@ -1,5 +1,8 @@
 #!/bin/sh
-# -Wall -pedantic are not used here because they complain about
-# [many] local variables that have been optimized out
-make  MAKE="./makeOpt-gnu" DEPENDOPT="-MM" CC4LIBS="g++" OPTFLAGS='-O3 -ffloat-store -funroll-loops $(ABKSYMBOLS)' CCFLAGS="-fPIC -pipe" C='gcc $(OPTFLAGS) $(CCFLAGS)' CC='g++ $(OPTFLAGS) $(CCFLAGS)' LD="g++ -shared" LDFINAL="g++" SODIRKEY="-Wl,-rpath," SOLABEL=""  YACC_LIB="" $1 $2 $3 $4 $5
-#SODIRKEY="-Wl,-rpath," SOLABEL="" $1
+script_dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+helper_dir=$script_dir
+while [ ! -f "$helper_dir/gnu-make-wrapper.sh" ]; do
+	[ "$helper_dir" = "/" ] && break
+	helper_dir=$(dirname "$helper_dir")
+done
+exec "$helper_dir/gnu-make-wrapper.sh" makeOpt-gnu "$script_dir" "$@"

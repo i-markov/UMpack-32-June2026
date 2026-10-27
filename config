@@ -25,7 +25,7 @@ if ( $gpp =~ /\S/ ) {
 
 print <<END;
 
- ************ UMpack configuration for Linux ******************
+ ************ UMpack configuration for $system ******************
  ** Contact: igor.markov1\@gmail.com
  ** If you have not read README.md yet, please quit this program(Ctrl-C)**
  ** If something goes wrong, send install.log with your bug report       **
@@ -120,6 +120,27 @@ if ( $system eq "Linux" ) {
             }
             else { die "The number of processes must be between 1 and 64\n"; }
         }
+    }
+}
+elsif ( $system eq "Darwin" ) {
+    $onDarwin = $system;
+    $MAKE     = "./make-gnu";
+
+    chomp( $Nproc = `sysctl -n hw.ncpu 2> /dev/null` );
+    if ( $Nproc =~ /^\d+$/ && $Nproc > 1 && $Nproc < 65 ) {
+        print " The OS reports $Nproc processors.\n";
+        print
+" How many parallel processes may I use during compilation ? (default $Nproc): ";
+        chomp( $rNproc = <> );
+        $rNproc =~ s/ +//g;
+        if ( $rNproc =~ /y/i || $rNproc eq "" ) {
+            $MAKE = "$MAKE -j $Nproc";
+        }
+        elsif ( $rNproc == 1 ) { }
+        elsif ( $rNproc > 1 && $rNproc < 65 ) {
+            $MAKE = "$MAKE -j $rNproc";
+        }
+        else { die "The number of processes must be between 1 and 64\n"; }
     }
 }
 else {
@@ -521,8 +542,15 @@ else {
             # diverges from the precomputed expected.out (e.g. tiny epsilon
             # penalties), so strip it for regression-only builds. -funroll-loops
             # is kept; it is a real optimization and does not affect regression.
-            system
+            if ($onDarwin) {
+                # Apple Clang does not support GCC's -ffloat-store option.
+                system
+"perl -p -i -e \'s/ -march=native//g\' gnu-make-wrapper.sh */makeOpt-gnu */*/makeOpt-gnu";
+            }
+            else {
+                system
 "perl -p -i -e \'s/-O3/-O3 -ffloat-store/; s/ -march=native//g\' gnu-make-wrapper.sh */makeOpt-gnu */*/makeOpt-gnu";
+            }
         }
         else {
             $buildBinDefault     = 1;

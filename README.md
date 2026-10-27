@@ -28,11 +28,11 @@ Top-level package directories:
 ## Requirements
 
 The build is driven by the checked-in Makefiles and shell wrappers.  A
-typical Linux build needs:
+typical Linux or macOS build needs:
 
 - Perl 5
 - GNU make, either as `make` or `gmake`
-- `g++`
+- GCC `g++` on Linux, or Apple Clang on macOS
 - `/bin/sh`
 - standard regression utilities used by the local scripts, including
   `diff`, `wc`, `egrep`, `sed`, `cat`, `rm` and `ls`
@@ -59,6 +59,10 @@ wrappers for the local system, creates the top-level `lib/` symlinks,
 checks the compiler, and then offers to build and test every component.
 On Linux it can also use multiple compile jobs when more than one
 processor is detected.
+
+On macOS, `config` detects Darwin and uses Apple Clang through the shared
+compiler wrapper. The wrapper translates the GNU linker options used by the
+legacy package Makefiles while leaving the Linux GCC command line unchanged.
 
 ## Build
 
