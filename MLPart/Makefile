@@ -144,8 +144,14 @@ clean:
 	rm -rf *.o Templates.DB *.exe* $(SOFULL) $(ARNAME) core ir.out\
 	lib*pure* cache SunWS_cache *notime new.out *.h.gch
 
-test: lib MLPartTest0.exe  MLPartTest1.exe  MLPartTest2.exe  MLPartTest6.exe\
+TEST_EXES = MLPartTest0.exe  MLPartTest1.exe  MLPartTest2.exe  MLPartTest6.exe\
        MLPartTest7.exe MLPartTest8.exe
+test: lib $(TEST_EXES)
+
+# Test executables link against this package's library; without this,
+# "make -jN test" can link a test before "lib" has (re)built it.
+$(TEST_EXES): lib
+
 testS: lib MLPartTest0.exeS  MLPartTest1.exeS  MLPartTest2.exeS  MLPartTest6.exeS\
        MLPartTest7.exeS MLPartTest8.exeS
 

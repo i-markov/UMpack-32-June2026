@@ -127,7 +127,13 @@ clean:
 	$(SOFULL) $(SONAME) $(ARNAME) core ir.out *.notime depend.mk\
         cache SunWS_cache *notime new.out *.h.gch
 
-test: lib GeomsTest0.exe GeomsTest1.exe GeomsTest2.exe GeomsTest3.exe
+TEST_EXES = GeomsTest0.exe GeomsTest1.exe GeomsTest2.exe GeomsTest3.exe
+test: lib $(TEST_EXES)
+
+# Test executables link against this package's library; without this,
+# "make -jN test" can link a test before "lib" has (re)built it.
+$(TEST_EXES): lib
+
 testS: lib GeomsTest0.exeS GeomsTest1.exeS
 
 .PHONY: depend, new, clean, test, lib

@@ -138,6 +138,11 @@ SANITIZER_FLAGS = -fsanitize=address,undefined -fno-omit-frame-pointer
 
 
 test: lib $(TEST_EXES)
+
+# Test executables link against this package's library; without this,
+# "make -jN test" can link a test before "lib" has (re)built it.
+$(TEST_EXES): lib
+
 testS: lib CtainersTest0.exeS
 
 .PHONY: depend, new, clean, test, lib, regression, sanitizer-regression

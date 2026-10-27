@@ -143,9 +143,15 @@ clean:
 	rm -rf *.o Templates.DB *.exe *.exe? $(SOFULL) $(ARNAME) core ir.out\
 	lib*pure* cache SunWS_cache *notime new.out *.h.gch
 
-test: lib PartEvalsTest0.exe   PartEvalsTest1.exe  PartEvalsTest2.exe \
+TEST_EXES = PartEvalsTest0.exe   PartEvalsTest1.exe  PartEvalsTest2.exe \
        PartEvalsTest3.exe   PartEvalsTest4.exe  PartEvalsTest6.exe\
        PartEvalsTest17.exe PartEvalsTest18.exe PartEvalsTest19.exe PartEvalsTest20.exe
+test: lib $(TEST_EXES)
+
+# Test executables link against this package's library; without this,
+# "make -jN test" can link a test before "lib" has (re)built it.
+$(TEST_EXES): lib
+
 testS: lib PartEvalsTest0.exeS  PartEvalsTest1.exeS
 
 # include depend.mk

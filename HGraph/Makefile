@@ -134,7 +134,12 @@ clean:
 	$(SOFULL) $(SONAME) $(ARNAME) core ir.out *.notime depend.mk\
         cache SunWS_cache *notime new.out *~ *.h.gch
 
-test: lib HGraphTest0.exe HGraphTest1.exe HGraphTest2.exe HGraphTest3.exe
+TEST_EXES = HGraphTest0.exe HGraphTest1.exe HGraphTest2.exe HGraphTest3.exe
+test: lib $(TEST_EXES)
+
+# Test executables link against this package's library; without this,
+# "make -jN test" can link a test before "lib" has (re)built it.
+$(TEST_EXES): lib
 
 testS: lib HGraphTest0.exeS HGraphTest1.exeS
 

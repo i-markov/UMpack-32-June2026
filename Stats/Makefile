@@ -143,9 +143,14 @@ clean:
         cache SunWS_cache *~ *.h.gch RNG/*~; \
 	cd RNG; $(MAKE) PWD=$(PWD)/$(RNG) clean
 
-test: lib StatsTest0.exe StatsTest1.exe StatsTest2.exe StatsTest3.exe\
+TEST_EXES = StatsTest0.exe StatsTest1.exe StatsTest2.exe StatsTest3.exe\
        StatsTest4.exe StatsTest5.exe StatsTest6.exe StatsTest7.exe\
        StatsTest8.exe StatsTest9.exe StatsTest10.exe StatsTest21.exe
+test: lib $(TEST_EXES)
+
+# Test executables link against this package's library; without this,
+# "make -jN test" can link a test before "lib" has (re)built it.
+$(TEST_EXES): lib
 
 testS: lib StatsTest0.exeS
 

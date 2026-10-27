@@ -137,7 +137,13 @@ clean:
 	rm -rf *.o Templates.DB *.exe *.exe? $(SOFULL) $(ARNAME) core ir.out\
 	lib*pure* cache SunWS_cache *notime new.out *.h.gch
 
-test:  lib HGraphWDimsTest0.exe   HGraphWDimsTest1.exe
+TEST_EXES = HGraphWDimsTest0.exe   HGraphWDimsTest1.exe
+test: lib $(TEST_EXES)
+
+# Test executables link against this package's library; without this,
+# "make -jN test" can link a test before "lib" has (re)built it.
+$(TEST_EXES): lib
+
 testS: HGraphWDimsTest0.exeS  HGraphWDimsTest1.exeS
 
 # Uncomment for automatic handling of dependencies

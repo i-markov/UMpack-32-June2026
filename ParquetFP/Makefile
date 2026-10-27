@@ -102,6 +102,10 @@ SANITIZER_FLAGS = -fsanitize=address,undefined -fno-omit-frame-pointer
 
 test: lib Parquet.exe $(TEST_EXES)
 
+# Test executables link against this package's library; without this,
+# "make -jN test" can link a test before "lib" has (re)built it.
+Parquet.exe $(TEST_EXES): lib
+
 .PHONY: depend, new, clean, test, lib, regression, sanitizer-regression
 
 # include depend.mk

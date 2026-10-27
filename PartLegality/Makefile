@@ -133,7 +133,13 @@ clean:
 	rm -rf *.o Templates.DB *.exe *.exe? $(SOFULL) $(ARNAME) core ir.out\
 	lib*pure* cache SunWS_cache *.sol newSoln* newout.* *~ *.h.gch *notime
 
-test: lib PartLegalityTest0.exe   PartLegalityTest1.exe  PartLegalityTest2.exe
+TEST_EXES = PartLegalityTest0.exe   PartLegalityTest1.exe  PartLegalityTest2.exe
+test: lib $(TEST_EXES)
+
+# Test executables link against this package's library; without this,
+# "make -jN test" can link a test before "lib" has (re)built it.
+$(TEST_EXES): lib
+
 testS: lib PartLegalityTest0.exeS  PartLegalityTest1.exeS
 
 # include depend.mk

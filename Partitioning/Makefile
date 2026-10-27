@@ -129,11 +129,17 @@ clean:
 	$(SOFULL) $(SONAME) $(ARNAME) core ir.out *.notime depend.mk\
         cache SunWS_cache *notime new.out *.h.gch
 
-test: lib PartitioningTest0.exe PartitioningTest1.exe PartitioningTest2.exe \
+TEST_EXES = PartitioningTest0.exe PartitioningTest1.exe PartitioningTest2.exe \
       PartitioningTest3.exe PartitioningTest4.exe PartitioningTest5.exe \
       PartitioningTest6.exe PartitioningTest7.exe PartitioningTest8.exe \
       PartitioningTest9.exe PartitioningTest10.exe PartitioningTest11.exe \
       PartitioningTest12.exe PartitioningTest13.exe
+test: lib $(TEST_EXES)
+
+# Test executables link against this package's library; without this,
+# "make -jN test" can link a test before "lib" has (re)built it.
+$(TEST_EXES): lib
+
 testS: lib PartitioningTest0.exeS PartitioningTest1.exeS
 
 .PHONY: depend, new, clean, test, lib

@@ -127,6 +127,11 @@ clean:
 
 test: lib $(TEST_EXE)
 	./$(TEST_EXE) >/dev/null
+
+# Test executables link against this package's library; without this,
+# "make -jN test" can link a test before "lib" has (re)built it.
+$(TEST_EXE): lib
+
 testS: lib $(TEST_EXE)
 
 tryrand: $(OBJ_TR) $(newranxx)

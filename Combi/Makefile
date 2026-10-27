@@ -132,8 +132,13 @@ clean:
 	$(SOFULL) $(ARNAME) lib*.so core ir.out *.notime depend.mk\
         cache SunWS_cache new.out *notime *.h.gch
 
-test: lib CombiTest0.exe  CombiTest1.exe CombiTest2.exe CombiTest3.exe\
+TEST_EXES = CombiTest0.exe  CombiTest1.exe CombiTest2.exe CombiTest3.exe\
       CombiTest4.exe CombiTest5.exe CombiTest6.exe CombiTest7.exe
+test: lib $(TEST_EXES)
+
+# Test executables link against this package's library; without this,
+# "make -jN test" can link a test before "lib" has (re)built it.
+$(TEST_EXES): lib
 
 testS: lib CombiTest0.exeS CombiTest1.exeS
 
