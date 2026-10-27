@@ -63,7 +63,7 @@ PURIFY  = purify -cache_dir=cache -always_use_cache_dir\
 # The four definitions below are for use with the PRINT_VERSION_INFO macro
 # defined in ABKCommon/abkversion.h
 ABKPACKAGE =`pwd | sed 's/.*\///g'`
-ABKSYSTEM  ="`uname -n`\x20running\x20`uname -sr | sed 's/ /-/g'`"
+ABKSYSTEM  ="`uname -n`\040running\040`uname -sr | sed 's/ /-/g'`"
 ABKUSER    =`whoami`@`uname -n`
 ABKSYMBOLS =-D__ABKPACKAGE__=\"$(ABKPACKAGE)\" -D__ABKSYSTEM__=\"$(ABKSYSTEM)\"\
         -D__ABKUSER__=\"$(ABKUSER)\" -D__ABKLIBBASE__=\"$(LIBBASE)\"
