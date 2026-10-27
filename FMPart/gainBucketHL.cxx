@@ -157,10 +157,12 @@ BucketArrayHL::getHighest() {  // assumes _highestValid indexes a bucket with
   std::set<int>::iterator g = _weightList.find(_gainOffset);
   abkfatal(g != _weightList.end(),
            "Must have such a weight, it was created above if not");
-  for (--g; g != _weightList.begin(); --g) {
+  // There may be no negative-gain buckets. Never decrement begin(), or
+  // insert the zero-gain list into itself when it is the first bucket.
+  while (g != _weightList.begin()) {
+    --g;
     (*this)[_gainOffset].insertBehind((*this)[*g]);
   }
-  (*this)[_gainOffset].insertBehind((*this)[*_weightList.begin()]);
 
   g = _weightList.find(_gainOffset);
   abkfatal(g != _weightList.end(),

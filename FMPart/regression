@@ -22,6 +22,8 @@ DIFF=/usr/bin/diff
 WC=/usr/bin/wc
 PROG=./FMPartTest
 
+"$PROG"9.exe || exit 1
+
 rm -f seeds.* new4.out new4out.notime expected4out.notime diffs4.notime \
 	new3.out new3out.notime diffs3.notime \
 	new8.out new8out.notime diffs8.notime \

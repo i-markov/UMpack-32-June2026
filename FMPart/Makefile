@@ -142,7 +142,7 @@ clean:
 	rm -rf *.o Templates.DB *.exe* $(SOFULL) $(ARNAME) core ir.out\
 	lib*pure* cache SunWS_cache *notime new.out *.h.gch
 
-test: lib FMPartTest0.exe FMPartTest1.exe FMPartTest2.exe FMPartTest3.exe FMPartTest4.exe FMPartTest8.exe
+test: lib FMPartTest0.exe FMPartTest1.exe FMPartTest2.exe FMPartTest3.exe FMPartTest4.exe FMPartTest8.exe FMPartTest9.exe
 testS: lib FMPartTest0.exeS FMPartTest1.exeS FMPartTest3.exeS
 
 # include depend.mk
