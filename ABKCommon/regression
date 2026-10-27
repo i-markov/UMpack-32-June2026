@@ -74,7 +74,7 @@ else
 	echo "Skipped (assertion checks are compiled out in this build)"
 fi
 
-echo -n "Running test0  ..."
+printf '%s' "Running test0  ..."
 "$PROG"0.exe >newout
 "$PROG"0.exe -help >>newout
 "$PROG"0.exe --help >>newout
@@ -83,38 +83,38 @@ echo -n "Running test0  ..."
 "$PROG"0.exe -aux filename.aux -sanity 0.0001 -n 25 >>newout
 echo Ok
 
-echo -n "Running test2  ..."
-echo -n "Running test2  ..." >>newout
+printf '%s' "Running test2  ..."
+printf '%s' "Running test2  ..." >>newout
 echo "-----------------------" >>newout
 "$PROG"2.exe >>newout
 echo Ok
 
-echo -n "Running test3  ..."
-echo -n "Running test3  ..." >>newout
+printf '%s' "Running test3  ..."
+printf '%s' "Running test3  ..." >>newout
 echo "-----------------------" >>newout
 "$PROG"3.exe >>/dev/null
 echo Ok
 
-echo -n "Running test4  ..."
-echo -n "Running test4  ..." >>newout
+printf '%s' "Running test4  ..."
+printf '%s' "Running test4  ..." >>newout
 echo "-----------------------" >>newout
 echo " 2 and 3" | "$PROG"4.exe >>newout
 echo Ok
 
-echo -n "Running test5  ..."
-echo -n "Running test5  ..." >>newout
+printf '%s' "Running test5  ..."
+printf '%s' "Running test5  ..." >>newout
 echo "-----------------------" >>newout
 "$PROG"5.exe >>newout 2>&1
 echo Ok
 
-echo -n "Running test7  ..."
-echo -n "Running test7  ..." >>newout
+printf '%s' "Running test7  ..."
+printf '%s' "Running test7  ..." >>newout
 echo "-----------------------" >>newout
 "$PROG"7.exe >>newout
 echo Ok
 
-echo -n "Running test9  ..."
-echo -n "Running test9  ..." >>newout
+printf '%s' "Running test9  ..."
+printf '%s' "Running test9  ..." >>newout
 echo "-----------------------" >>newout
 printf '%s\n' 0 3819098400 2 0 8 8 >seeds.in
 "$PROG"9.exe >>newout 2>&1
@@ -122,54 +122,54 @@ echo "---------------------- seeds.out:----------" >>newout
 cat seeds.out >>newout
 echo Ok
 
-echo -n "Running test10 ..."
-echo -n "Running test10 ..." >>newout
+printf '%s' "Running test10 ..."
+printf '%s' "Running test10 ..." >>newout
 echo "-----------------------" >>newout
 "$PROG"10.exe >>newout
 echo Ok
 
-echo -n "Running test11 ..."
-echo -n "Running test11 ..." >>newout
+printf '%s' "Running test11 ..."
+printf '%s' "Running test11 ..." >>newout
 echo "-----------------------" >>newout
 "$PROG"11.exe >>newout
 echo Ok
 
-echo -n "Running test13 ..."
-echo -n "Running test13 ..." >>newout
+printf '%s' "Running test13 ..."
+printf '%s' "Running test13 ..." >>newout
 echo "-----------------------" >>newout
 "$PROG"13.exe >>newout
 echo Ok
 
-echo -n "Running test16 ..."
-echo -n "Running test16 ..." >>newout
+printf '%s' "Running test16 ..."
+printf '%s' "Running test16 ..." >>newout
 echo "-----------test16-----" >>newout
 printf '%s\n' 0 4040668743 >seeds.in
 "$PROG"16.exe >>newout 2>&1
 echo Ok
 
-echo -n "Running test19 ..."
-echo -n "Running test19 ..." >>newout
+printf '%s' "Running test19 ..."
+printf '%s' "Running test19 ..." >>newout
 echo "-----------test19-----" >>newout
 "$PROG"19.exe >>newout 2>&1
 echo Ok
 
-echo -n "Running test20a ..."
-echo -n "Running test20a ..." >>newout
+printf '%s' "Running test20a ..."
+printf '%s' "Running test20a ..." >>newout
 echo "-----------test20a-----" >>newout
 "$PROG"20.exe >>newout 2>&1
 cat seeds.out >>newout
 echo Ok
 
-echo -n "Running test20b ..."
-echo -n "Running test20b ..." >>newout
+printf '%s' "Running test20b ..."
+printf '%s' "Running test20b ..." >>newout
 echo "-----------test20b-----" >>newout
 rm -f seeds.in
 "$PROG"20.exe >>newout 2>&1
 cat seeds.out >>newout
 echo Ok
 
-echo -n "Running test21 ..."
-echo -n "Running test21 ..." >>newout
+printf '%s' "Running test21 ..."
+printf '%s' "Running test21 ..." >>newout
 echo "-----------test21-----" >>newout
 "$PROG"21.exe >>newout 2>&1
 echo Ok
