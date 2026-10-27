@@ -1297,6 +1297,13 @@ pair<double, double> BaseBinSplitter::getCongestionRatiosH(
   pair<double, double> p1Demand = congmap.getDemand(p1BBox);
   pair<double, double> p1Supply = congmap.getSupply(p1BBox);
 
+  // Bookshelf inputs may have no routing resources. Demand / zero supply
+  // produces infinities (then NaNs during normalization), which corrupt the
+  // cutline search. Use uniform whitespace when either ratio is undefined.
+  if (p0Supply.first + p0Supply.second <= 0. ||
+      p1Supply.first + p1Supply.second <= 0.)
+    return make_pair(1., 1.);
+
   pair<double, double> ratio;
 
   //  both demand
@@ -1366,6 +1373,12 @@ pair<double, double> BaseBinSplitter::getCongestionRatiosV(
   p1BBox.xMin = xSplit;
   pair<double, double> p1Demand = congmap.getDemand(p1BBox);
   pair<double, double> p1Supply = congmap.getSupply(p1BBox);
+
+  // As for horizontal cuts, zero routing supply cannot define a congestion
+  // weight. Keep both weights finite so the cutline search can compare them.
+  if (p0Supply.first + p0Supply.second <= 0. ||
+      p1Supply.first + p1Supply.second <= 0.)
+    return make_pair(1., 1.);
 
   pair<double, double> ratio;
 

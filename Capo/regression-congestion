@@ -1,0 +1,75 @@
+#!/bin/sh
+set -eu
+
+# A fully occupied 12-cell chain, without routing resources. Exercise both
+# vertical (one row) and horizontal (multiple rows) congestion-shifted cuts.
+script_dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+work_dir=$(mktemp -d "${TMPDIR:-/tmp}/capo-congestion.XXXXXX")
+trap 'rm -rf "$work_dir"' EXIT HUP INT TERM
+cd "$work_dir"
+
+awk 'BEGIN {
+  print "UCLA nodes 1.0\nNumNodes : 12\nNumTerminals : 0"
+  for (i = 0; i < 12; ++i) print "v" i, 1, 1
+}' > design.nodes
+awk 'BEGIN {
+  print "UCLA nets 1.0\nNumNets : 11\nNumPins : 22"
+  for (i = 0; i < 11; ++i)
+    print "NetDegree : 2 n" i "\nv" i " B\nv" (i+1) " B"
+}' > design.nets
+awk 'BEGIN {
+  print "UCLA pl 1.0"
+  for (i = 0; i < 12; ++i) print "v" i, i%4, int(i/4), ": N"
+}' > design.pl
+awk 'BEGIN {
+  print "UCLA scl 1.0\nNumRows : 3"
+  for (i = 0; i < 3; ++i) {
+    print "CoreRow Horizontal\n  Coordinate : " i
+    print "  Height : 1\n  Sitewidth : 1\n  Sitespacing : 1"
+    print "  Siteorient : N\n  Sitesymmetry : Y"
+    print "  SubrowOrigin : 0 NumSites : 4\nEnd"
+  }
+}' > design.scl
+echo 'RowBasedPlacement : design.nodes design.nets design.scl design.pl' > design.aux
+
+for mode in one-row multirow; do
+  for shifting in off on; do
+    printf '0\n1\n' > seeds.in
+    set -- -f design.aux -savePl result.pl -noHMetis
+    cols=4
+    rows=3
+    if [ "$mode" = one-row ]; then
+      set -- "$@" -saveOrder result.order
+      cols=12
+      rows=1
+    fi
+    if [ "$shifting" = on ]; then
+      set -- "$@" -congestionShifting
+    fi
+    if ! "$script_dir/CapoTest1.exe" "$@" > run.log 2>&1; then
+      cat run.log
+      exit 1
+    fi
+    # With unit cells and no whitespace, legality means exactly one cell
+    # per integer site, with every node present and inside the row bounds.
+    if ! awk -v cols="$cols" -v rows="$rows" '
+      $1 ~ /^v[0-9]+$/ {
+        n = substr($1, 2) + 0
+        if (n < 0 || n >= 12 || names[$1]++ || sites[$2, $3]++ ||
+            $2 != int($2) || $3 != int($3) ||
+            $2 < 0 || $2 >= cols || $3 < 0 || $3 >= rows) bad = 1
+        ++count
+      }
+      END {exit (bad || count != 12)}' result.pl; then
+      echo "Illegal placement: $mode, congestion shifting $shifting" >&2
+      cat result.pl
+      exit 1
+    fi
+    if [ "$mode" = one-row ]; then
+      awk '$1 ~ /^v[0-9]+$/ {print $2, $1}' result.pl |
+        sort -n | awk '{print $2}' > sorted.order
+      cmp sorted.order result.order
+    fi
+  done
+done
+echo 'Congestion shifting placement checks passed'

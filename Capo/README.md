@@ -70,6 +70,13 @@ The same run can still write a Bookshelf `.pl` file with `-savePl` and a
 gnuplot script with any existing `-plot*` option.  The package regression
 checks this mode by comparing `capo1.order` with `expected1.order`.
 
+Congestion shifting (`-congestionShifting`) uses routing demand divided by
+routing supply. If either side of a cut has no routing supply, Capo uses
+uniform whitespace weights instead. This includes the synthetic one-row
+layout, which has no routing-resource data. The regression script checks
+that a fully occupied 12-cell chain remains legal in both one-row and
+multirow modes with congestion shifting enabled.
+
 ## Notes
 
 - Legacy design notes and examples live under `DOCS/`.

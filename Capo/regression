@@ -37,6 +37,8 @@ if [ ! -x "$PROG1" ]; then
   exit 1
 fi
 
+/bin/sh ./regression-congestion || exit 1
+
 /bin/rm -f seeds.out seeds.in new.out newout.notime expectedout.notime diffs.notime \
   capo1.pl capo1.notime expected1.notime diffs1.notime \
   capo1plot.gpl capo1plot.notime expected1plot.notime diffs1plot.notime \
