@@ -208,6 +208,11 @@ class RBPCoreRow {
   // reference is removed --DAP
   const PlacementWOrient& _placement;
 
+  static const PlacementWOrient& emptyPlacement() {
+    static const PlacementWOrient placement(0);
+    return placement;
+  }
+
   void save(std::ostream& os) const;
   void buildWhitespaceLocs(const HGraphWDimensions& hg) const;
 
@@ -228,12 +233,12 @@ class RBPCoreRow {
   RBPCoreRow(double y)
       : _y(y),
         _whitespaceLocsPopulated(false),
-        _placement(PlacementWOrient(0)) {}
+        _placement(emptyPlacement()) {}
 
   RBPCoreRow()
       : _y(0),
         _whitespaceLocsPopulated(false),
-        _placement(PlacementWOrient(0)) {}
+        _placement(emptyPlacement()) {}
 
   RBPCoreRow(const RBPCoreRow& orig)
       : _orient(orig._orient),
