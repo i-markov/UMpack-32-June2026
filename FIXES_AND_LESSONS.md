@@ -18,6 +18,16 @@ This file has two purposes:
   - `CCFLAGS = -fPIC`
   - `SODIRKEY = -Wl,-rpath,`
   - `SONAMEKEY = -Wl,-soname,`
+- Keep that GNU spelling in Makefiles on every platform. On macOS,
+  `gnu-make-wrapper.sh` routes C++ compiles and links through `cxx-wrapper.sh`,
+  which calls Apple Clang and translates the GNU-only options (`-shared`,
+  `-soname`, `--start-group`, `--no-as-needed`). Fix new platform differences
+  in that wrapper, not by adding per-package Makefile branches. Do not add
+  GCC-only flags such as `-ffloat-store` unconditionally.
+- Put `-D` string macros that contain spaces in octal (`\040`), not hex
+  (`\x20`). Hex escapes consume every following hex digit, so `"\x20Darwin"`
+  parses as `\x20D` and Clang rejects it; octal escapes stop after three
+  digits.
 - Keep inline comments off linker-flag definitions such as `SONAMEKEY`. A
   trailing space in `-Wl,-soname,` becomes an empty SONAME argument under GNU
   `ld`.
@@ -64,6 +74,11 @@ This file has two purposes:
 - Make `test` or `regression` targets depend on `lib` where practical. If that
   is not possible, regression scripts should clearly report that `make lib`
   may be required after `make clean`.
+- Listing `lib` beside the test executables (`test: lib $(TEST_EXES)`) does
+  not order them under `make -jN`: tests can link while the package library is
+  still being rebuilt. List the executables in `TEST_EXES` and add
+  `$(TEST_EXES): lib`. With the old rule, a clean `makeOpt-gnu -j 14 test`
+  failed in 15 of 19 packages on macOS.
 - Remove inactive compiler, linker, suffix-rule, and test variants together.
   Leaving static, Purify, Solaris, or pseudo-build fragments behind creates
   configuration paths that drift.
@@ -96,6 +111,10 @@ This file has two purposes:
   without yet adding the corresponding narrow header explicitly. That keeps the
   dependency surface shrinking while avoiding duplicate inclusion bugs from
   legacy unguarded headers such as `paramproc.h`.
+- libc++ (Apple Clang) is stricter than libstdc++ about transitive includes
+  and GCC-internal names. Include headers such as `<sstream>` explicitly,
+  qualify `std::ios_base` and `std::setiosflags`, and do not use libstdc++
+  typedefs such as `__istream_type`.
 - Keep compatibility behavior in project-local shims rather than adding
   forbidden specializations to `std`.
 - Delete compatibility alias headers once live includes have moved to standard
@@ -136,6 +155,12 @@ This file has two purposes:
 - Use `/bin/sh` for regression scripts unless another shell is genuinely
   required. When converting legacy shell scripts, preserve stderr capture if
   warnings may be part of the golden output.
+- Do not use `echo -n` in regression scripts. macOS `/bin/sh` prints a literal
+  `-n` and a newline. Use `printf '%s' "..."`, which behaves the same under
+  every POSIX `sh`.
+- When a tool's output file name changes (for example, gnuplot scripts now
+  written as `.gpl` instead of `.plt`), update the regression script and
+  golden output in the same change.
 - Remove stale `TEST_IN`, `TEST_OUT`, and `TEST_DIFF` variables, including their
   clean-rule references, after moving regression logic into a script.
 - Add assertion-based unit tests for semantics and invariants that are not
@@ -200,6 +225,15 @@ This file has two purposes:
   legacy key semantics and self-parented root handling.
 - Do not mutate a tree while recursively traversing it for annotation. Compute
   annotations first, then perform structural cleanup in a separate phase.
+- A `const&` member initialized from a temporary (`_ref(Type(0))`) dangles as
+  soon as the constructor returns. Bind it to a function-local static or to an
+  object that outlives the instance.
+- Backward iteration over a `std::set` must not decrement `begin()`. Loops of
+  the form `for (--g; g != s.begin(); --g)` are wrong when `g` is already the
+  first element; use `while (g != s.begin()) { --g; ... }`.
+- Guard ratios against zero denominators before normalization. Demand divided
+  by zero routing supply yields infinity and later NaN, which silently breaks
+  comparisons such as a cutline search. Fall back to a neutral weight instead.
 
 ### Source and documentation maintenance
 
@@ -248,6 +282,16 @@ This file has two purposes:
 - Made the top-level `config` script refresh `lib/` symlinks safely after a
   checkout rename by checking for stale or unexpected entries before asking to
   rebuild the directory.
+- Added native macOS builds with Apple Clang: `config` detects Darwin and
+  offers parallel builds, `cxx-wrapper.sh` translates GNU linker options, and
+  the Linux GCC command line is unchanged. Related portability fixes: octal
+  escapes in `ABKSYSTEM`, explicit libc++ includes and `std::` qualification,
+  and `printf` instead of `echo -n` in all regression scripts. All
+  regressions exit 0 on macOS and Linux; ClusteredHGraph, GenHier, and FMPart
+  still show known platform-dependent diffs on macOS.
+- Made test executables depend on `lib` in every package Makefile so that
+  parallel `make -jN test` no longer links tests against a library that is
+  still being rebuilt.
 
 ### Package-specific record
 
@@ -274,6 +318,19 @@ This file has two purposes:
   after confirming the corrected baselines were stable.
 
 #### Package entries
+
+- `Capo`: congestion shifting (`-congestionShifting`) now uses uniform
+  whitespace weights when either side of a cut has no routing supply, such as
+  the synthetic one-row layout. Before the fix, zero supply produced NaN
+  weights. The new `regression-congestion` script checks that a fully occupied
+  12-cell chain stays legal in one-row and multirow modes.
+- `FMPart`: fixed `BucketArrayHL::getHighest()` decrementing
+  `_weightList.begin()` and inserting the zero-gain bucket into itself when no
+  negative-gain buckets exist. Added `FMPartTest9` to the test build and
+  regression.
+- `RBPlace`: `RBPCoreRow` default and `y`-only constructors bound
+  `_placement` to a temporary; they now bind it to a shared static empty
+  placement. The regression now reads gnuplot output from `out.gpl`.
 
 - `Combi`: replaced the remaining local `abkFactorial()` uses in gray
   permutation generation with a package-local helper and made the permutation
